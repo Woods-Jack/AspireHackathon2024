@@ -1,9 +1,11 @@
+import Markdown from "react-markdown";
+
 interface OutputProps {
   content: string;
 }
 
 const Output = ({content}:OutputProps) => {
-  return `Hello Output ${content}`
+  return <Markdown>{content}</Markdown>
 }
 
 export default Output;

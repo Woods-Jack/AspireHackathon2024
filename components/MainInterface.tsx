@@ -28,7 +28,8 @@ const MainInterface = () => {
           }),
         });
         const itinerary = await response.json();
-        setOutput(itinerary);
+        console.log('FINAL OUTPUT', itinerary);
+        setOutput(itinerary.kwargs.content);
       } else {
         console.log('No indexes found, please create an index')
       }
@@ -63,11 +64,13 @@ const MainInterface = () => {
   }
 
   return(
-    <>
-    <InputForm inputSubmitCb={getItinerary} />
-    <Output content={output}/>
-    <DataEntry addDataCb={addPineconeData} />
-    </>
+    <div>
+      <div>
+        <InputForm inputSubmitCb={getItinerary} />
+        <DataEntry addDataCb={addPineconeData} />
+      </div>
+    <Output content={output} />
+    </div>
   )
 }
 
