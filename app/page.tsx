@@ -1,12 +1,11 @@
-import MainInterface from '@/components/MainInterface'
-import styles from './page.module.css'
+import MainInterface from '@/components/InputForm/MainInterface'
+import { PageWrapper } from '@/components/common/PageWrapper'
+
 
 export default function Home() {
   return(
-    <main className={styles.main}>
-      <div className={styles.description}>
+      <PageWrapper>
         <MainInterface />
-      </div>
-    </main>
+      </PageWrapper>
   )
 }
