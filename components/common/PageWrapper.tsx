@@ -4,5 +4,5 @@ interface PageWrapperProps {
   children: React.ReactNode;
 }
 export const PageWrapper: React.FC<PageWrapperProps> = ({ children }) => {
-  return <Box padding="100px 40px 40px 40px">{children}</Box>;
+  return <Box padding={{ lg: 100, md: 50, sm: 30, base: 10 }}>{children}</Box>;
 };
