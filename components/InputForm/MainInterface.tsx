@@ -9,7 +9,7 @@ import { MetadataArray } from '@/langchain/textSplitter';
 
 const MainInterface = () => {
   const [history, setHistory] = useState<[string, string][]>([]);
-  const [output, setOutput] = useState<string>('');
+  const [output, setOutput] = useState<any>({});
 
   const getItinerary = async(input: UserInputProps) => {
     try {
@@ -28,8 +28,9 @@ const MainInterface = () => {
           }),
         });
         const itinerary = await response.json();
-        console.log('FINAL OUTPUT', itinerary);
-        setOutput(itinerary.kwargs.content);
+
+        setOutput(itinerary);
+        console.log('OUT', output)
       } else {
         console.log('No indexes found, please create an index')
       }
