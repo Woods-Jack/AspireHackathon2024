@@ -3,20 +3,20 @@ import { Flex, Box, VStack, Heading, Text } from "@chakra-ui/react";
 
 interface OutputProps {
   content: {
-    title: string,
-    numberOfDays: string,
-    location: string,
-    activities: Activity[]
-  }
+    title: string;
+    numberOfDays: string;
+    location: string;
+    activities: Activity[];
+  };
 }
 interface Activity {
-  title: string,
-  length: string,
-  description: string,
+  title: string;
+  length: string;
+  description: string;
 }
 
-const Output = ({content}:OutputProps) => {
-  const { title, numberOfDays, location, activities } = content || {} ;
+const Output = ({ content }: OutputProps) => {
+  const { title, numberOfDays, location, activities } = content || {};
 
   return(
     <Box w='75vw' bg='#f8f8ff'  p={4} mt={4} rounded='xl'>
