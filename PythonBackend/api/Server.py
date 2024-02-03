@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import Response
-from Utils import returnMarcelUserData
+from api.Utils import returnMarcelUserData,returnCareerConversationsUserData
 
 app = Flask(__name__)
 
@@ -34,6 +34,19 @@ def getMarcelUserData(LLID=None):
 
 @app.route("/api/user_themes/<LLID>",methods=["GET"])
 def getUserThemes(LLID = None):
-    return None
+    body = returnCareerConversationsUserData(LLID)
+    if "Error" in body:
+       return Response(f"Error: No resources found for user with LLID : {LLID}",status = 404)
     
-
+    y = 0;
+    for year in body:
+        if (int(year) > y):
+            y = int(year)
+    current_year_catchups = body[str(y)]
+    
+    catchup_text = ""
+    for quarter in current_year_catchups:
+        catchup_text+= current_year_catchups[quarter]
+    
+    return catchup_text 
+    
