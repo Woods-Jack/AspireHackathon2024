@@ -23,7 +23,7 @@ export const IndustryGraph = () => {
           </Text>
         </Flex>
 
-        <Box borderRadius="14" p="20px" bg={color.lightGrey} w="50%">
+        <Box borderRadius="14" p="20px" bg={color.lightGrey} w="50%" mb='45px'>
           <Text>
             AI overview Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Vestibulum ut odio ac nisi convallis convallis. Donec auctor semper
