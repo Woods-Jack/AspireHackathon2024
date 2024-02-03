@@ -1,3 +1,4 @@
+import { BusinessGraph } from "@/components/Dashboard/Graphs/BusinessGraph";
 import { IndustryGraph } from "@/components/Dashboard/Graphs/IndustryGraph";
 import MainInterface from "@/components/InputForm/MainInterface";
 import { Header } from "@/components/common/Header";
@@ -10,10 +11,13 @@ export default function Home() {
     <>
       <LeftSidebar />
       <PageWrapper>
-        <Heading as="h1" fontSize="64" noOfLines={1} pb='60px'>
+        <Heading as="h1" fontSize="64" noOfLines={1} pb="60px">
           Hi, Anne
         </Heading>
-        <IndustryGraph />
+        <Flex dir="row" w='100%' gap='60px' justifyContent='space-between'>
+          <IndustryGraph />
+          <BusinessGraph />
+        </Flex>
       </PageWrapper>
     </>
   );
