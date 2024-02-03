@@ -1,3 +1,4 @@
+import { Community } from "@/components/Dashboard/Community/Community";
 import { BusinessGraph } from "@/components/Dashboard/Graphs/BusinessGraph";
 import { IndustryGraph } from "@/components/Dashboard/Graphs/IndustryGraph";
 import { PathGenerator } from "@/components/Dashboard/PathGenerator/PathGenerator";
@@ -22,7 +23,7 @@ export default function Home() {
         <Flex dir="row" w='100%' gap='60px' justifyContent='space-between'>
 
         <PathGenerator />
-        <Flex flex='1'></Flex>
+        <Community />
         </Flex>
       </PageWrapper>
     </>
