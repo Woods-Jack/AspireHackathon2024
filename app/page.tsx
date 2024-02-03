@@ -1,22 +1,19 @@
+import { IndustryGraph } from "@/components/Dashboard/Graphs/IndustryGraph";
 import MainInterface from "@/components/InputForm/MainInterface";
 import { Header } from "@/components/common/Header";
+import LeftSidebar from "@/components/common/LeftSidebar";
 import { PageWrapper } from "@/components/common/PageWrapper";
 import { Button, Flex, Heading } from "@chakra-ui/react";
 
 export default function Home() {
   return (
     <>
-      <Header />
+      <LeftSidebar />
       <PageWrapper>
-        {/* <MainInterface /> */}
-        <Heading textAlign="center" size="lg" fontSize="75px">
-          Welcome
+        <Heading as="h1" fontSize="64" noOfLines={1} pb='60px'>
+          Hi, Anne
         </Heading>
-        <Flex w="100%" justifyContent='center' pt="12">
-          <Button as="a" href="/form">
-            Try out our tool
-          </Button>
-        </Flex>
+        <IndustryGraph />
       </PageWrapper>
     </>
   );
