@@ -1,28 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
+import { RunnableSequence } from "@langchain/core/runnables";
 import { PineconeStore } from "@langchain/pinecone";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import { getItineraryChain } from "@/langchain/getItineraryChain";
+import { getLearningPathChain } from "@/langchain/getLearningPathChain";
 import { initPinecone } from "@/utils/initPinecone";
+import { buildUserData } from "@/utils/buildUserData";
 
-interface ChatProps {
-  userInput: {
-    preferences: string;
-    budget: string;
-    lengthOfStay: string;
-  }
-  history: []
+interface AzureProps {
+  getChain: string;
   indexName: string
+}
+
+const functionMap = {
+  getLearningPathChain
 }
 
 export async function POST(req: NextRequest) {
  
   const body = await req.json();
-  const { userInput, history, indexName }: ChatProps = body;
+  const { getChain, indexName }: AzureProps = body;
   console.log('body',body);
-  const { preferences, budget, lengthOfStay } = userInput || {};  
-  const userQuestion = `I want to build an itinerary for my trip of ${lengthOfStay} days. My budget is ${budget} and my interests are the following: ${preferences}`
-  console.log('formattedQ', userQuestion);
+
+  const userQuestion = buildUserData()
+  console.log('formattedQ', getChain);
     try {
       const pinecone = await initPinecone();
       const pineconeIndex = pinecone.Index(indexName);
@@ -31,23 +32,15 @@ export async function POST(req: NextRequest) {
         { pineconeIndex }
       );
 
-      const itineraryChain = getItineraryChain(vectorStore);
-
-      const pastMessages = history.map((message: string, i: number) => {
-        if (i % 2 === 0) {
-          return new HumanMessage(message);
-        } else {
-          return new AIMessage(message);
-        }
-      });
+      const chain = functionMap[getChain](vectorStore);
     
       //console.log('CHAT HISTORY', itineraryChain)
       console.log("About to invoke");
-      const itinerary = await itineraryChain.invoke(userQuestion);
+      const result = await chain.invoke(userQuestion);
       console.log("After invoke")
-      console.log('response:', itinerary);
+    
 
-      return NextResponse.json(itinerary, {
+      return NextResponse.json(result, {
         status: 200,
       });
     } catch(error: any) {

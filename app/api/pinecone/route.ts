@@ -73,17 +73,16 @@ export async function PUT(req: NextRequest) {
   const body = await req.json();
   const { indexName, namespace, data, metadata } = body;
 
-  const splitDocs = await textSplitter(data, metadata);
+  const splitDocs = await textSplitter(data);
 
-  // console.log('DOCS', splitDocs);
+  console.log('DOCS', splitDocs);
   try {
     const pinecone = await initPinecone();
     const embeddings = new OpenAIEmbeddings();
     const pineconeIndex = pinecone.Index(indexName);
     await PineconeStore.fromDocuments(splitDocs, embeddings, {
       pineconeIndex,
-      namespace,
-      maxConcurrency: 5,
+      maxConcurrency: 10,
     });
     return NextResponse.json({ message: `Data added to namespace ${namespace} successfully`}, { status: 200 })
   } catch(error: any) {

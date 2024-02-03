@@ -5,21 +5,13 @@ export type MetadataArray = {
   [key: string]:any
 }
 
-export const textSplitter = async(data:string, metadataArr:MetadataArray) => {
+export const textSplitter = async(data:Document<Record<string, any>>[]) => {
   const splitter = new RecursiveCharacterTextSplitter({
     chunkSize: 1000,
-    chunkOverlap: 200,
+    chunkOverlap: 0,
   });
 
-  const output = await splitter.splitDocuments([
-    new Document({ 
-      pageContent: data,
-      metadata: metadataArr.reduce((acc:string, metadata:string) => {
-        Object.assign(acc,metadata);
-        return acc;
-      }, {}),
-    })
-  ]);
+  const output = await splitter.splitDocuments(data);
 
   return output;
 } 

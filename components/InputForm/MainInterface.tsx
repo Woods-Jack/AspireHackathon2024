@@ -2,19 +2,21 @@
 
 import React, {useState} from 'react';
 import InputForm from "./InputForm";
-import Output from "./Output";
+import { LearningPath } from '../LearningPath/LearningPath';
 import  DataEntry from "./DataEntry";
 import { UserInputProps } from "./InputForm.types";
 import { MetadataArray } from '@/langchain/textSplitter';
+import { getLearningPathChain } from '@/langchain/getLearningPathChain';
 
 const MainInterface = () => {
   const [history, setHistory] = useState<[string, string][]>([]);
   const [output, setOutput] = useState<any>({});
 
-  const getItinerary = async(input: UserInputProps) => {
+  const getLearningPlan = async(input: UserInputProps) => {
     try {
-      console.log('input', input);
-      const indexName = 'test-index';
+      const indexName = 'courses';
+      const getChain = 'getLearningPathChain';
+      
       if (indexName) {
         const response = await fetch('/api/azure', {
           method: 'POST',
@@ -22,8 +24,7 @@ const MainInterface = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            userInput: input,
-            history,
+            getChain,
             indexName,
           }),
         });
@@ -40,37 +41,57 @@ const MainInterface = () => {
     }
   }
 
-  const addPineconeData = async(data: string, metadata: MetadataArray, namespace: string) => {
-    try{
-      const indexName = 'test-index';
-      if (indexName) {
-        const response = await fetch('/api/pinecone', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            indexName,
-            namespace,
-            data,
-            metadata,
-          }),
-        });
-      } else {
-        console.log('No indexes found, please create an index')
-      }
-    } catch(error: any) {
-      console.log('Error', error)
-    }
-  }
+  // const getSpeedTLDR = async (descriptions: string) => {
+  //   try {
+  //     const indexName = 'courses';
+  //     if (indexName) {
+  //       const response = await fetch('/api/azure', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           userInput: input,
+  //           history,
+  //           indexName,
+  //         }),
+  //       });
+  //       const itinerary = await response.json();
+  //   } catch(error: any) {
+  //     console.log('Error', error)
+  //   }
+  // }
+
+  // const addPineconeData = async(data: string, metadata: MetadataArray, namespace: string) => {
+  //   try{
+  //     const indexName = 'test-index';
+  //     if (indexName) {
+  //       const response = await fetch('/api/pinecone', {
+  //         method: 'PUT',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           indexName,
+  //           namespace,
+  //           data,
+  //           metadata,
+  //         }),
+  //       });
+  //     } else {
+  //       console.log('No indexes found, please create an index')
+  //     }
+  //   } catch(error: any) {
+  //     console.log('Error', error)
+  //   }
+  // }
 
   return(
     <div>
       <div>
-        <InputForm inputSubmitCb={getItinerary} />
-        <DataEntry addDataCb={addPineconeData} />
+        <InputForm inputSubmitCb={getLearningPlan} />
       </div>
-    <Output content={output} />
+    <LearningPath content={output} />
     </div>
   )
 }
