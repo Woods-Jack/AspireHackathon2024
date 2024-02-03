@@ -8,13 +8,10 @@ import { Button, Flex, Heading } from "@chakra-ui/react";
 export default function Home() {
   return (
     <>
-      <LeftSidebar />
-      <PageWrapper>
-        <Heading as="h1" fontSize="64" noOfLines={1} pb='60px'>
-          Hi, Anne
-        </Heading>
-        <IndustryGraph />
-      </PageWrapper>
+      <Heading as="h1" fontSize="64" noOfLines={1} pb='60px'>
+        Hi, Anne
+      </Heading>
+      <IndustryGraph />
     </>
   );
 }
