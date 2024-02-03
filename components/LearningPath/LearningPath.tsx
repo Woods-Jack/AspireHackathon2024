@@ -14,6 +14,7 @@ interface LearningPath {
   image: string,
   description: string,
   id: number;
+  justification: string;
 }
 
 export const LearningPath = ({content, tldr}:LearningPathProps) => {
@@ -22,7 +23,7 @@ export const LearningPath = ({content, tldr}:LearningPathProps) => {
     <Box>
     <Text>{tldr}</Text>
     {learningPath && learningPath.map((course) => {
-      const { title, id, length, image, description} = course || {};
+      const { title, id, length, image, description, justification } = course || {};
       const url = id ? `https://marcel.ai/classes/course/course:${id}` : '#'
       return (
         <VStack key={course.title}>
@@ -30,6 +31,7 @@ export const LearningPath = ({content, tldr}:LearningPathProps) => {
           <Text>{length}</Text>
           <img src={image} alt={`${title} course image`} width={300} height={200} />
           <Text>{description}</Text>
+          <Text>{justification}</Text>
           <NextLink href={url} passHref>
             <Button as="a">
               Get Started

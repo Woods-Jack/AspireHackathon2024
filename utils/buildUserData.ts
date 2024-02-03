@@ -1,9 +1,9 @@
-export const buildUserData = () => {
-  return(
+export const buildUserData = (theme: string) => 
+  (
   `
     Information about the employee:
       Name: Nilusha
-      Capability: Product Manager
+      Capability: Product
       Seniority: Associate L1
       Past Projects: ASDA, Retail
 
@@ -12,11 +12,10 @@ export const buildUserData = () => {
       - Actor mapping
       - Agile methodology
 
-    Trends that we see as big right now:
+    Current market trends:
       - Generative AI
       - Blockchain
       - NextJS
       - Jira
   `
   )
-}

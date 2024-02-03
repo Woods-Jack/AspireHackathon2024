@@ -4,7 +4,7 @@ import { getSpeedTLDRPrompt } from "./prompts/getSpeedTLDRTemplate";
 import { RunnablePassthrough, RunnableSequence } from "@langchain/core/runnables";
 
 
-export const getLearningPathChain = (vectorStore: PineconeStore) => {
+export const getSpeedTLDRChain = (vectorStore: PineconeStore) => {
   console.log("Getting tldr chain");
   const model = new ChatOpenAI({
     temperature: 0.5,

@@ -1,28 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import { RunnableSequence } from "@langchain/core/runnables";
 import { PineconeStore } from "@langchain/pinecone";
 import { OpenAIEmbeddings } from "@langchain/openai";
-import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { getLearningPathChain } from "@/langchain/getLearningPathChain";
+import { getSpeedTLDRChain } from "@/langchain/getSpeedTLDRChain";
 import { initPinecone } from "@/utils/initPinecone";
-import { buildUserData } from "@/utils/buildUserData";
 
 interface AzureProps {
   getChain: string;
-  indexName: string
+  indexName: string;
+  input: string;
 }
 
 const functionMap = {
-  getLearningPathChain
+  getLearningPathChain,
+  getSpeedTLDRChain,
 }
 
 export async function POST(req: NextRequest) {
  
   const body = await req.json();
-  const { getChain, indexName }: AzureProps = body;
+  const { getChain, indexName, input }: AzureProps = body;
   console.log('body',body);
 
-  const userQuestion = buildUserData()
   console.log('formattedQ', getChain);
     try {
       const pinecone = await initPinecone();
@@ -36,7 +35,8 @@ export async function POST(req: NextRequest) {
     
       //console.log('CHAT HISTORY', itineraryChain)
       console.log("About to invoke");
-      const result = await chain.invoke(userQuestion);
+      console.log('INPUT', input);
+      const result = await chain.invoke(input);
       console.log("After invoke")
     
 

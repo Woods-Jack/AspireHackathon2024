@@ -5,7 +5,7 @@ import { UserInputProps } from "./InputForm.types";
 import { Button, HStack, Input, Select, Text } from "@chakra-ui/react";
 
 interface InputFormProps {
-  inputSubmitCb: (input: UserInputProps) => void;
+  inputSubmitCb: () => void;
 }
 
 const InputForm = ({ inputSubmitCb }: InputFormProps) => {
@@ -17,13 +17,8 @@ const InputForm = ({ inputSubmitCb }: InputFormProps) => {
   // Handle form submission
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const userInput = {
-      preferences: preferences,
-      lengthOfStay: lengthOfStay,
-      budget: budget,
-    };
 
-    inputSubmitCb(userInput);
+    inputSubmitCb();
   };
 
   return (

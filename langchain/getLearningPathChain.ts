@@ -14,14 +14,13 @@ import zodToJsonSchema from "zod-to-json-schema";
 export const getLearningPathChain = (vectorStore: PineconeStore) => {
   console.log("Getting itinerary chain");
   const model = new ChatOpenAI({
-    temperature: 0.5,
+    temperature: 0.7,
     modelName: 'gpt-3.5-turbo-0613',
   });
 
   const retriever = vectorStore.asRetriever(10);
-  const CONDENSE_QUESTION_PROMPT = condenseQuestionPrompt;
   const GET_LEARNING_PATH_PROMPT = getLearningPathPrompt;
-
+  console.log('prompt', getLearningPathPrompt)
   const functionCallingModel = model.bind({
     functions: [
       {
