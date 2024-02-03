@@ -11,7 +11,7 @@ export const PathComponent = (props: PathComponentProps) => {
       direction="row"
       bg={color.lightGrey}
       justifyContent="space-between"
-      p={"10px 20px"}
+      p={"20px 30px"}
       borderRadius="14"
     >
       <Flex direction="column">
