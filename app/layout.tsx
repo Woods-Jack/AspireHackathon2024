@@ -1,6 +1,5 @@
 // app/layout.tsx
 import { Providers } from './providers'
-import { fonts } from './fonts'
 import { PageWrapper } from '@/components/common/PageWrapper'
 import LeftSidebar from '@/components/common/LeftSidebar'
 
@@ -10,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode,
 }) {
   return (
-    <html lang='en' className={fonts.jost.variable}>
+    <html lang='en'>
       <body>
         <Providers>
           <LeftSidebar />
