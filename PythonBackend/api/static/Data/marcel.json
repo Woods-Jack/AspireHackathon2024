@@ -1,0 +1,98 @@
+{
+    "giatrave": {
+        "Name": "Gianluca",
+        "Surname": "Traversa",
+        "Title": "Associate Software Development Engineer 1",
+        "Home Office": "London, United Kingdom",
+        "Bio": "Test Biography",
+        "Skills": [
+            "Apex",
+            "Python",
+            "JEST",
+            "Flask",
+            "Git"
+        ],
+        "PIDs": [
+            "123123",
+            "456456"
+        ]
+    },
+    "ravgoll": {
+        "Name": "Ravikanth",
+        "Surname": "Gollapalli",
+        "Title": "Junior Associate Product Manager",
+        "Home Office": "London, United Kingdom",
+        "Bio": "As a recent Computer Science with Data Science graduate from University College Dublin, I've spent 4 years developing my passion for technology by learning about topics like Machine Learning, Artificial Intelligence, Recommender Systems, Digital Media Ethics, Human Computer Interaction, Cloud Computing, Information Visualisation and more. My final year project was based around finding and modelling echo chambers on social media, by scraping public Twitter data. I also undertook 3 internships during this time, one at a medium sized enterprise, one at a multinational corporation and one at an early stage & fast growing startup. As well as this, I attained a structured elective in my university in Innovation For Change.Being a former winner of the Young Social Innovators competition, winner of the SAGE World Cup, and having led my team to the finals of the Enactus Ireland National Competition, I've been able to merge my passion for technology and entrepreneurship to make real world change. I've had the privilege of working with multiple high potential startups and entrepreneurs.",
+        "Skills": [
+            "Data Analysis",
+            "Comunication",
+            "Agile Leadership",
+            "Design Thinking",
+            "User Stories"
+        ],
+        "PIDs": [
+            "134134",
+            "859585",
+            "874937"
+        ]
+    },
+    "jacwoods1": {
+        "Name": "Jack",
+        "Surname": "Woods",
+        "Title": "Associate Software Development Engineer 1",
+        "Home Office": "London, United Kingdom",
+        "Bio": "Another Test",
+        "Skills": [
+            "MatLab",
+            "React",
+            "Javascript",
+            "IoT",
+            "User Stories"
+        ],
+        "PIDs": [
+            "638274",
+            "123454",
+            "937103",
+            "230984"
+        ]
+    },
+    "alepacur": {
+        "Name": "Alexandra",
+        "Surname": "Pacuraru",
+        "Title": "Associate Software Development Engineer 1",
+        "Home Office": "London, United Kingdom",
+        "Bio": "Another Test another",
+        "Skills": [
+            "Chakra",
+            "React",
+            "Javascript",
+            "Figma",
+            "Mural"
+        ],
+        "PIDs": [
+            "456234",
+            "435252",
+            "456747"
+        ]
+    },
+    "nilperer": {
+        "Name": "Nilusha",
+        "Surname": "Perera",
+        "Title": "Junior Associate Product Manager",
+        "Home Office": "London, United Kingdom",
+        "Bio": "In my role as a product manager, I find immense enjoyment in the dynamic and multifaceted nature of my work. This career allows me to blend creativity, problem-solving, and a deep understanding of market and user needs to create successful products. From conducting in-depth market research to launching new features, each aspect of my job contributes to my profound satisfaction and sense of achievement. Let's delve into the specific areas of my work that bring me the most joy. I also enjoy working as an agile programme manager. This combines my natural organisational skills with project planning and management.",
+        "Skills": [
+            "Jira",
+            "Scrum",
+            "Agile Leadership",
+            "Economics",
+            "Microsoft Excel"
+        ],
+        "PIDs": [
+            "983274",
+            "398753",
+            "623534",
+            "598240"
+        ]
+    }
+}
