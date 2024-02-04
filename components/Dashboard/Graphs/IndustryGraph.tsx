@@ -25,19 +25,26 @@ export const IndustryGraph = () => {
 
         <Box
           borderRadius="14"
-          p="20px"
+          p="30px"
           bg={color.lightGrey}
           w="100%"
           mb="45px"
           flex="1"
         >
+          <Flex h='100%' m='auto' alignContent='center' alignItems='center'>
           <Text>
-            AI overview Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Vestibulum ut odio ac nisi convallis convallis. Donec auctor semper
-            justo, ac placerat dui vehicula eu. Nullam consectetur lectus non
-            nibh volutpat fermentum. Sed at eros vehicula, lacinia lorem eu,
-            vulputate justo.
+           In recent years, generative AI has
+            captured the imagination of the technology industry, heralded as a
+            groundbreaking innovation with the potential to revolutionize
+            various sectors. Its ability to autonomously generate content,
+            images, and even entire virtual worlds has sparked widespread
+            excitement and anticipation for its transformative capabilities.
+            However, amidst the hype, there are also concerns about ethical
+            implications, data privacy, and the potential for misuse,
+            highlighting the need for responsible development and deployment of
+            generative AI technologies.
           </Text>
+          </Flex>
         </Box>
       </Flex>
     </Flex>
