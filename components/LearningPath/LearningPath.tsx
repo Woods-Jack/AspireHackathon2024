@@ -1,5 +1,4 @@
 "use client";
-
 import {
   VStack,
   Box,
@@ -16,7 +15,8 @@ import { Feedback } from "./Feedback";
 import { UserProfileProps } from "../common/UserComponent";
 import { color } from "@/theme/colors";
 import { FaArrowRight } from "react-icons/fa";
-
+import { useEffect, useState } from "react";
+import { buildUserData } from "@/utils/buildUserData";
 interface LearningPathProps {
   content: {
     learningPath: LearningPath[];
@@ -34,9 +34,11 @@ interface LearningPath {
   justification: string;
 }
 
-const callBackend = async () => {
-  const response = await fetch("/api/backend", {
-    method: "POST",
+
+
+const callBackend = async() => {
+  const response = await fetch('/api/backend', {
+    method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
@@ -47,24 +49,93 @@ const callBackend = async () => {
   console.log("response", response);
 };
 
-export const LearningPath = ({
-  content,
-  tldr,
-  learners,
-}: LearningPathProps) => {
-  const { learningPath } = content || {};
+export const LearningPath = ({learners}:LearningPathProps) => {
+  const [learningPlan, setLearningPlan] = useState<any>({});
+  const [speedTLDR, setSpeedTLDR] = useState<string>('');
+
+  const getLearningPlan = async() => {
+    try {
+      const indexName = 'courses';
+      const getChain = 'getLearningPathChain';
+      const input = buildUserData('AI');
+  
+      if (indexName) {
+        const response = await fetch('/api/azure', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            getChain,
+            indexName,
+            input
+          }),
+        });
+        const plan = await response.json();
+        setLearningPlan(plan);
+        return plan;
+      } else {
+        console.log('No indexes found, please create an index')
+      }
+  
+  
+    } catch(error: any) {
+      console.log('Error', error)
+    }
+  }
+  
+  const getSpeedTLDR = async (descriptions: string) => {
+    try {
+      const indexName = 'courses';
+      const getChain = 'getSpeedTLDRChain';
+      const input = descriptions;
+  
+      if (indexName) {
+        const response = await fetch('/api/azure', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            getChain,
+            indexName,
+            input
+          }),
+        });
+  
+        const res = await response.json();
+        const tldr = res.kwargs.content;
+        console.log('speedTLDR',tldr)
+        setSpeedTLDR(tldr)
+  
+      } else {
+      console.log('No indexes found, please create an index')
+      } 
+    } catch(error: any) {
+      console.log('Error', error)
+    }
+  }
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
     await callBackend();
   };
+  useEffect(() => {
+    async function generateLearningPlan() {
+      const learningPlan = await getLearningPlan();
+      const descriptions = learningPlan.learningPath.map((course: any) => course.description).join(' ');
+      await getSpeedTLDR(descriptions);
+    }
+    generateLearningPlan();
+  },[]);
+  const { learningPath } = learningPlan;
 
   return (
     <Box>
       <Heading as="h1" fontSize="64px" mb={16}>
         Your Path
       </Heading>
-      <Text mb={12}>{tldr}</Text>
+      <Text mb={12}>{speedTLDR}</Text>
       <Feedback />
       {learningPath &&
         learningPath.map((course) => {
