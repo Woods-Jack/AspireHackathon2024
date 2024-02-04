@@ -7,7 +7,7 @@ const getLearningPathTemplate = `
   You should select an appropriate number of courses (at least three) from the context provided, ranking the courses from highest to lowest priority.
   Each course will have a title, length and cover image URL which you should extract and return.
 
-  Write a description for each course and its key features. Do not use the provided description, generate a new one.
+  Write a short description for each course and its key features. Do not use the provided description, generate a new one.
 
   Give a short justification ("this is selected for you because...") of what data you have used to select the course.
 

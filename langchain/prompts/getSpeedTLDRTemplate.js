@@ -3,8 +3,8 @@ import { PromptTemplate } from "@langchain/core/prompts";
 const getSpeedTLDRTemplate = `
   You are an intelligent AI assistant who is an expert at summarising information.
   You will be given a list of course descriptions that an employee is taking as part of their learning path.
-  Your job is to write a short summary explaining how these courses will help an employee collaborate with people in other SPEED capabilities.
-  Write your response as a few sentences written in the second person (e.g. you, your). You do not need to summarise each individual course.
+  Your job is to write a VERY SHORT summary explaining how these courses will help an employee collaborate with people in other SPEED capabilities.
+  Your response should be written in 2nd person (using you, your, yours).
   DO NOT include a final summary sentence. DO NOT use the employee's name.
 
   Use this information about SPEED capabilities to inform your answer:

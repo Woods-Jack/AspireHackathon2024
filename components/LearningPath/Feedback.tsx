@@ -4,7 +4,7 @@ import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
 
 export const Feedback = () => {
   return(
-    <HStack mb={12} gap={4} alignContent='center'>
+    <HStack bgColor='#EEEEEE' mb={12} px={4} gap={4} rounded={24} width='max-content' alignContent='center'>
       <Text>What do you think of your Path?</Text>
       <Button variant="round">
         <FaThumbsUp />

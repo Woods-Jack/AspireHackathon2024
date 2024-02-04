@@ -6,15 +6,15 @@ import { PathComponent } from "./PathComponent";
 export const PathGenerator = () => {
   const hardCoded = [
     {
-      title: "Product Management",
+      title: "Experience Engineering",
       description: "theme1",
     },
     {
-      title: "Data Capabilities",
+      title: "Generative AI",
       description: "theme1",
     },
     {
-      title: "Agile Methodologies",
+      title: "Customer Experience",
       description: "theme1",
     },
   ];
