@@ -146,7 +146,7 @@ export const LearningPath = ({learners}:LearningPathProps) => {
                   <img src={image} alt={`${title} course image`} width={300} />
                   <VStack alignItems='start'> 
                     <Text>{description}</Text>
-                    <Text>{justification}</Text>
+                    <Text as='i'>{justification}</Text>
                   </VStack>
                 </HStack>
               <Flex mt={6} width='100%' justifyContent='space-between' alignItems='end'>
