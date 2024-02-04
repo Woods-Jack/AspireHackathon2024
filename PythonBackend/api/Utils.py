@@ -4,9 +4,9 @@ from openai import AzureOpenAI
 from pytrends.request import TrendReq
 
 client = AzureOpenAI(
-    api_key='d3aabbff0b83450ba5fe1d76442d9903',
+    api_key='AZURE_API_KEY',
     api_version='2023-07-01-preview',
-    azure_endpoint = 'https://gen-z-llm.openai.azure.com/'
+    azure_endpoint = 'AZURE_ENDPOINT'
 )
 
 def returnMarcelUserData(LLID = None):
@@ -33,7 +33,7 @@ def returnCareerConversationsUserData(LLID = None):
     
     
 def extractKeyWords(data = None):
-    completion = client.chat.completions.create(model = "gen-z-gpt35",messages = [{
+    completion = client.chat.completions.create(model = "AZURE_MODEL_NAME",messages = [{
         "role": "user",
         "content": f"Extract the 5 key words from the following piece of text.The text represents the career goals of an employee for the next quarter. The key words will be used to recommend training material for the employee so be specific about technologies. Return the keyworkds as a comma separated list without numbering them. {data}"
     }])
