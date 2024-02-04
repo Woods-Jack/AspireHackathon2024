@@ -8,13 +8,14 @@ import {
   Button,
   HStack,
   Image,
+  Select,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { OtherLearners } from "./OtherLearners";
 import { Feedback } from "./Feedback";
 import { UserProfileProps } from "../common/UserComponent";
 import { color } from "@/theme/colors";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaBookmark } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { buildUserData } from "@/utils/buildUserData";
 interface LearningPathProps {
@@ -34,11 +35,9 @@ interface LearningPath {
   justification: string;
 }
 
-
-
-const callBackend = async() => {
-  const response = await fetch('/api/backend', {
-    method: 'POST',
+const callBackend = async () => {
+  const response = await fetch("/api/backend", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
@@ -49,72 +48,69 @@ const callBackend = async() => {
   console.log("response", response);
 };
 
-export const LearningPath = ({learners}:LearningPathProps) => {
+export const LearningPath = ({ learners }: LearningPathProps) => {
   const [learningPlan, setLearningPlan] = useState<any>({});
-  const [speedTLDR, setSpeedTLDR] = useState<string>('');
+  const [speedTLDR, setSpeedTLDR] = useState<string>("");
 
-  const getLearningPlan = async() => {
+  const getLearningPlan = async () => {
     try {
-      const indexName = 'courses';
-      const getChain = 'getLearningPathChain';
-      const input = buildUserData('AI');
-  
+      const indexName = "courses";
+      const getChain = "getLearningPathChain";
+      const input = buildUserData("AI");
+
       if (indexName) {
-        const response = await fetch('/api/azure', {
-          method: 'POST',
+        const response = await fetch("/api/azure", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             getChain,
             indexName,
-            input
+            input,
           }),
         });
         const plan = await response.json();
         setLearningPlan(plan);
         return plan;
       } else {
-        console.log('No indexes found, please create an index')
+        console.log("No indexes found, please create an index");
       }
-  
-  
-    } catch(error: any) {
-      console.log('Error', error)
+    } catch (error: any) {
+      console.log("Error", error);
     }
-  }
-  
+  };
+
   const getSpeedTLDR = async (descriptions: string) => {
     try {
-      const indexName = 'courses';
-      const getChain = 'getSpeedTLDRChain';
+      const indexName = "courses";
+      const getChain = "getSpeedTLDRChain";
       const input = descriptions;
-  
+
       if (indexName) {
-        const response = await fetch('/api/azure', {
-          method: 'POST',
+        const response = await fetch("/api/azure", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             getChain,
             indexName,
-            input
+            input,
           }),
         });
-  
+
         const res = await response.json();
         const tldr = res.kwargs.content;
-        console.log('speedTLDR',tldr)
-        setSpeedTLDR(tldr)
-  
+        console.log("speedTLDR", tldr);
+        setSpeedTLDR(tldr);
       } else {
-      console.log('No indexes found, please create an index')
-      } 
-    } catch(error: any) {
-      console.log('Error', error)
+        console.log("No indexes found, please create an index");
+      }
+    } catch (error: any) {
+      console.log("Error", error);
     }
-  }
+  };
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -123,11 +119,13 @@ export const LearningPath = ({learners}:LearningPathProps) => {
   useEffect(() => {
     async function generateLearningPlan() {
       const learningPlan = await getLearningPlan();
-      const descriptions = learningPlan.learningPath.map((course: any) => course.description).join(' ');
+      const descriptions = learningPlan.learningPath
+        .map((course: any) => course.description)
+        .join(" ");
       await getSpeedTLDR(descriptions);
     }
     generateLearningPlan();
-  },[]);
+  }, []);
   const { learningPath } = learningPlan;
 
   return (
@@ -135,7 +133,29 @@ export const LearningPath = ({learners}:LearningPathProps) => {
       <Heading as="h1" fontSize="64px" mb={16}>
         Your Path
       </Heading>
-      <Text mb={12}>{speedTLDR}</Text>
+      <Flex >
+        <Text mb={12} flex="2">
+          {speedTLDR}
+        </Text>
+        <Flex direction="column" gap='15px'>
+          <Button
+            variant="outline"
+            borderRadius="full"
+            rightIcon={<FaBookmark />}
+            background={color.lightGrey}
+          >
+            Save
+          </Button>
+          <Select
+            width="200px"
+            variant="filled"
+            borderRadius="full"
+            placeholder="Make Shorter"
+            background={color.lightGrey}
+          />
+        </Flex>
+      </Flex>
+
       <Feedback />
       {learningPath &&
         learningPath.map((course) => {
@@ -167,7 +187,7 @@ export const LearningPath = ({learners}:LearningPathProps) => {
                       alt={`${title} course image`}
                       width={300}
                       height={200}
-                      borderRadius='14'
+                      borderRadius="14"
                     />
                     <VStack alignItems="start">
                       <Text>{description}</Text>
