@@ -7,15 +7,15 @@ export const PathGenerator = () => {
   const hardCoded = [
     {
       title: "Experience Engineering",
-      description: "theme1",
+      description: "Explore you personalised Experience Engineering path.",
     },
     {
       title: "Generative AI",
-      description: "theme1",
+      description: "Explore you personalised Generative AI path.",
     },
     {
       title: "Customer Experience",
-      description: "theme1",
+      description: "Explore you personalised Customer Experience path.",
     },
   ];
   return (

@@ -78,7 +78,7 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
 
   const [learningPlan, setLearningPlan] = useState<any>({});
   const [speedTLDR, setSpeedTLDR] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getLearningPlan = async (
     theme: string,
@@ -256,6 +256,7 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
                         gap="3px"
                         href={url}
                         _hover={{ bg: color.lightBlack}}
+                        target="_blank"
                       >
                         Go to course
                         <FaArrowRight />
