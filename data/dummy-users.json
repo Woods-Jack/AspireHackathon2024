@@ -1,0 +1,19 @@
+{
+  "people": [
+    {
+      "firstName": "Jack",
+      "lastName": "Woods",
+      "location": "London, UK"
+    },
+    {
+      "firstName": "Emily",
+      "lastName": "Smith",
+      "location": "New York, USA"
+    },
+    {
+      "firstName": "Lucas",
+      "lastName": "Johnson",
+      "location": "Sydney, Australia"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { FaHome, FaUser } from "react-icons/fa";
 import { IoIosSchool } from "react-icons/io";
+import { GoGraph } from "react-icons/go";
 import { color } from "@/theme/colors";
 const LeftSidebar = () => {
   return (
@@ -35,12 +36,12 @@ const LeftSidebar = () => {
             variant="ghost"
             outline="none"
             color="white"
-            icon={<FaHome />}
+            icon={<GoGraph />}
             fontSize="40px"
           />
           <IconButton
             as="a"
-            href="/"
+            href="/your-path"
             aria-label="Path"
             variant="ghost"
             outline="none"

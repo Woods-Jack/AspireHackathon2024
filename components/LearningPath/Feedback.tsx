@@ -1,11 +1,18 @@
-import { HStack, Text, Box } from "@chakra-ui/react"
+import { color } from "@/theme/colors"
+import { HStack, Text, Box, Button, } from "@chakra-ui/react"
+import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
 
 export const Feedback = () => {
   return(
-    <HStack mb={12} gap={4}>
+    <HStack mb={12} gap={4} alignContent='center'>
       <Text>What do you think of your Path?</Text>
-      <Box width={10} height={10} bgColor='#AAAAAA' rounded={24} />
-      <Box width={10} height={10} bgColor='#AAAAAA' rounded={24} />
+      <Button variant="round">
+        <FaThumbsUp />
+      </Button>
+      <Button variant="round" colorScheme="red">
+        <FaThumbsDown />
+      </Button>
+
     </HStack>
   )
 }
