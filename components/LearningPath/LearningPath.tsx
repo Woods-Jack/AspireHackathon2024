@@ -1,23 +1,15 @@
-"use client";
-import {
-  VStack,
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Button,
-  HStack,
-  Image,
-  Select,
-} from "@chakra-ui/react";
-import NextLink from "next/link";
-import { OtherLearners } from "./OtherLearners";
-import { Feedback } from "./Feedback";
-import { UserProfileProps } from "../common/UserComponent";
-import { color } from "@/theme/colors";
-import { FaArrowRight, FaBookmark } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { buildUserData } from "@/utils/buildUserData";
+"use client"
+
+import React, { useEffect, useState } from 'react'
+import { VStack, Box, Flex, Heading, Text, Button, HStack, Image, Select, color} from "@chakra-ui/react"
+import NextLink from 'next/link'
+import { OtherLearners } from "./OtherLearners"
+import { Feedback } from "./Feedback"
+import { buildUserData } from '@/utils/buildUserData'
+import { LoadingPage } from '../common/Loading'
+import { UserProfileProps } from '../common/UserComponent'
+import { FaArrowRight, FaBookmark } from 'react-icons/fa'
+
 interface LearningPathProps {
   content: {
     learningPath: LearningPath[];
@@ -50,7 +42,8 @@ const callBackend = async () => {
 
 export const LearningPath = ({ learners }: LearningPathProps) => {
   const [learningPlan, setLearningPlan] = useState<any>({});
-  const [speedTLDR, setSpeedTLDR] = useState<string>("");
+  const [speedTLDR, setSpeedTLDR] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getLearningPlan = async () => {
     try {
@@ -123,11 +116,13 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
         .map((course: any) => course.description)
         .join(" ");
       await getSpeedTLDR(descriptions);
+      setIsLoading(false);
     }
     generateLearningPlan();
   }, []);
+  if(isLoading)
+    return( <LoadingPage />)
   const { learningPath } = learningPlan;
-
   return (
     <Box>
       <Heading as="h1" fontSize="64px" mb={16}>
