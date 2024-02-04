@@ -1,9 +1,11 @@
 "use client"
 
+import React, { useEffect, useState } from 'react'
 import { VStack, Box, Flex, Heading, Text, Button, HStack} from "@chakra-ui/react"
 import NextLink from 'next/link'
 import { OtherLearners } from "./OtherLearners"
 import { Feedback } from "./Feedback"
+import { buildUserData } from '@/utils/buildUserData'
 
 interface LearningPathProps {
   content: {
@@ -22,6 +24,8 @@ interface LearningPath {
   justification: string;
 }
 
+
+
 const callBackend = async() => {
   const response = await fetch('/api/backend', {
     method: 'POST',
@@ -36,18 +40,92 @@ const callBackend = async() => {
 }
 
 
-export const LearningPath = ({content, tldr, learners}:LearningPathProps) => {
-  const { learningPath } = content || {};
+export const LearningPath = ({learners}:LearningPathProps) => {
+  const [learningPlan, setLearningPlan] = useState<any>({});
+  const [speedTLDR, setSpeedTLDR] = useState<string>('');
+
+  const getLearningPlan = async() => {
+    try {
+      const indexName = 'courses';
+      const getChain = 'getLearningPathChain';
+      const input = buildUserData('AI');
+  
+      if (indexName) {
+        const response = await fetch('/api/azure', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            getChain,
+            indexName,
+            input
+          }),
+        });
+        const plan = await response.json();
+        setLearningPlan(plan);
+        return plan;
+      } else {
+        console.log('No indexes found, please create an index')
+      }
+  
+  
+    } catch(error: any) {
+      console.log('Error', error)
+    }
+  }
+  
+  const getSpeedTLDR = async (descriptions: string) => {
+    try {
+      const indexName = 'courses';
+      const getChain = 'getSpeedTLDRChain';
+      const input = descriptions;
+  
+      if (indexName) {
+        const response = await fetch('/api/azure', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            getChain,
+            indexName,
+            input
+          }),
+        });
+  
+        const res = await response.json();
+        const tldr = res.kwargs.content;
+        console.log('speedTLDR',tldr)
+        setSpeedTLDR(tldr)
+  
+      } else {
+      console.log('No indexes found, please create an index')
+      } 
+    } catch(error: any) {
+      console.log('Error', error)
+    }
+  }
 
   const onSubmit = async (e:any) => {
     e.preventDefault()
     await callBackend();
   }
 
+  useEffect(() => {
+    async function generateLearningPlan() {
+      const learningPlan = await getLearningPlan();
+      const descriptions = learningPlan.learningPath.map((course: any) => course.description).join(' ');
+      await getSpeedTLDR(descriptions);
+    }
+    generateLearningPlan();
+  },[]);
+  
+  const { learningPath } = learningPlan;
   return(
     <Box>
-      <Heading as='h1' fontSize='64px' mb={16}>Your Path</Heading>
-      <Text mb={12}>{tldr}</Text>
+      <Heading as='h1' fontSize='64px' fontWeight={300} mb={16}>Your Path</Heading>
+      <Text mb={12}>{speedTLDR}</Text>
       <Feedback />
       {learningPath && learningPath.map((course) => {
         const { title, id, length, image, description, justification } = course || {};
@@ -58,11 +136,11 @@ export const LearningPath = ({content, tldr, learners}:LearningPathProps) => {
               <Box rounded={48} minHeight={12} width={12} bgColor='#FE414D'/>
               <Box width={1} bgColor='#FE414D' height='100%'/>
             </VStack>
-            <VStack alignItems='start' maxWidth='45%'>
-              <Heading as='h2' fontSize='32px' >{title}</Heading>
+            <VStack alignItems='start' maxWidth='50%'>
+              <Heading as='h2' fontSize='32px' fontWeight={350}>{title}</Heading>
               <Box backgroundColor='#EEEEEE' p={4} mt={2} mb={8} rounded='2xl'>
                 <HStack spacing={4} alignItems='start'>
-                  <img src={image} alt={`${title} course image`} width={300} height={200} />
+                  <img src={image} alt={`${title} course image`} width={300} />
                   <VStack alignItems='start'> 
                     <Text>{description}</Text>
                     <Text>{justification}</Text>

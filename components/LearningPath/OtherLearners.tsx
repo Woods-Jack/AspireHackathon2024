@@ -8,7 +8,7 @@ export const OtherLearners = ({learners}:LearnerProps) => {
 
   return(
     <VStack alignItems='start'>
-    <Heading as='h3' fontSize='32px'>Other SPEED Learners:</Heading>
+    <Heading as='h3' fontSize='32px' fontWeight={350}>Other SPEED Learners:</Heading>
     <Box  p={4} mt={2} mb={8} rounded='2xl'>
       <Flex justifyContent='flex-start' gap={4}>
         {learners.map((profile:any) => (
