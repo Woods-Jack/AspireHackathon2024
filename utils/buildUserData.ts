@@ -1,21 +1,18 @@
-export const buildUserData = (theme: string) => 
+export const buildUserData = (theme: string, marcelData: string, ccData: string) => 
   (
   `
     Information about the employee:
-      Name: Nilusha
-      Capability: Product
-      Seniority: Associate L1
-      Past Projects: ASDA, Retail
+      ${marcelData}
 
     Key themes from the employees recent growth catch ups:
-      - Data capabilities
-      - Actor mapping
-      - Agile methodology
+      ${ccData}
 
     Current market trends:
       - Generative AI
       - Blockchain
       - NextJS
       - Jira
+
+    Make sure to particularly include courses around the theme of "${theme.replace('_',' ')}"
   `
   )

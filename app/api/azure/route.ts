@@ -20,9 +20,7 @@ export async function POST(req: NextRequest) {
  
   const body = await req.json();
   const { getChain, indexName, input }: AzureProps = body;
-  console.log('body',body);
 
-  console.log('formattedQ', getChain);
     try {
       const pinecone = await initPinecone();
       const pineconeIndex = pinecone.Index(indexName);
@@ -33,9 +31,7 @@ export async function POST(req: NextRequest) {
 
       const chain = functionMap[getChain](vectorStore);
     
-      //console.log('CHAT HISTORY', itineraryChain)
       console.log("About to invoke");
-      console.log('INPUT', input);
       const result = await chain.invoke(input);
       console.log("After invoke")
     

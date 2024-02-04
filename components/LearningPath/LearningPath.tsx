@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { VStack, Box, Flex, Heading, Text, Button, HStack, Image, Select, color} from "@chakra-ui/react"
 import NextLink from 'next/link'
 import { OtherLearners } from "./OtherLearners"
@@ -27,30 +28,53 @@ interface LearningPath {
   justification: string;
 }
 
-const callBackend = async () => {
-  const response = await fetch("/api/backend", {
+const getMarcelData = async (llid:string) => {
+  const response = await fetch("/api/marcel", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      llid: "jacwoods1",
+      llid,
     }),
   });
-  console.log("response", response);
+  const marcelData = await response.json();
+  const dataString = `
+    Name: ${marcelData.Name}
+    Surname: ${marcelData.Surname}
+    Skills: ${marcelData.Skills.join(', ')}
+  `
+  return dataString
+};
+
+const getCCData = async (llid:string) => {
+  const response = await fetch("/api/cc", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      llid,
+    }),
+  });
+  const ccData = await response.json();
+  console.log('data', ccData)
+  return ccData
 };
 
 export const LearningPath = ({ learners }: LearningPathProps) => {
+  const searchParams = useSearchParams()
+
   const [learningPlan, setLearningPlan] = useState<any>({});
   const [speedTLDR, setSpeedTLDR] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const getLearningPlan = async () => {
+  const getLearningPlan = async (theme: string, marcelData: string, ccData: string) => {
     try {
       const indexName = "courses";
       const getChain = "getLearningPathChain";
-      const input = buildUserData("AI");
-
+      const input = buildUserData(theme, marcelData, ccData);
+      console.log('input', input);
       if (indexName) {
         const response = await fetch("/api/azure", {
           method: "POST",
@@ -95,7 +119,6 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
 
         const res = await response.json();
         const tldr = res.kwargs.content;
-        console.log("speedTLDR", tldr);
         setSpeedTLDR(tldr);
       } else {
         console.log("No indexes found, please create an index");
@@ -105,31 +128,34 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
     }
   };
 
-  const onSubmit = async (e: any) => {
-    e.preventDefault();
-    await callBackend();
-  };
   useEffect(() => {
-    async function generateLearningPlan() {
-      const learningPlan = await getLearningPlan();
+    async function generateLearningPlan(theme: string) {
+      const marcelData = await getMarcelData('annravioli');
+      const ccData = await getCCData('annravioli');
+      console.log("MARCEL", ccData);
+      const learningPlan = await getLearningPlan(theme.replace('_',' '), marcelData, ccData);
       const descriptions = learningPlan.learningPath
         .map((course: any) => course.description)
         .join(" ");
       await getSpeedTLDR(descriptions);
       setIsLoading(false);
     }
-    generateLearningPlan();
+    const theme = searchParams.get('theme') || ''
+    generateLearningPlan(theme);
   }, []);
-  if(isLoading)
-    return( <LoadingPage />)
+
+
   const { learningPath } = learningPlan;
-  return (
+
+  return isLoading ? (
+    <LoadingPage />
+  ) : (
     <Box>
       <Heading as="h1" fontSize="64px" mb={16}>
         Your Path
       </Heading>
-      <Flex >
-        <Text mb={12} flex="2">
+      <Flex justifyContent='space-between' width='90%'>
+        <Text mb={8} flex="2" maxWidth='70%'>
           {speedTLDR}
         </Text>
         <Flex direction="column" gap='15px'>
@@ -165,7 +191,7 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
                 <Box rounded={48} minHeight={12} width={12} bgColor="#FE414D" />
                 <Box width={1} bgColor="#FE414D" height="100%" />
               </VStack>
-              <VStack alignItems="start" maxWidth="45%">
+              <VStack alignItems="start" width="55%">
                 <Heading as="h2" fontSize="32px" fontWeight="medium">
                   {title}
                 </Heading>
@@ -186,7 +212,7 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
                     />
                     <VStack alignItems="start">
                       <Text>{description}</Text>
-                      <Text>{justification}</Text>
+                      <Text as='i'>{justification}</Text>
                     </VStack>
                   </HStack>
                   <Flex
@@ -200,11 +226,12 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
                     </Text>
                     <NextLink href={url} passHref>
                       <Button
+                        as='a'
                         bg={color.black}
                         borderRadius="14"
                         color={color.white}
                         gap="3px"
-                        onClick={onSubmit}
+                        href={url}
                       >
                         Go to course
                         <FaArrowRight />

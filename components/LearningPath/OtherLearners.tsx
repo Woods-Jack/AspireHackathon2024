@@ -8,7 +8,7 @@ interface LearnerProps {
 
 export const OtherLearners = ({ learners }: LearnerProps) => {
   return (
-    <VStack alignItems="start" flex='2'>
+    <VStack alignItems="start" flex='2' maxWidth='40%'>
       <Heading as="h3" fontSize="32px" fontWeight='medium'>
         Other SPEED Learners:
       </Heading>

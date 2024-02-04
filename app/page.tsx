@@ -19,7 +19,6 @@ export default function Home() {
           <BusinessGraph />
         </Flex>
         <Flex dir="row" w='100%' gap='60px' justifyContent='space-between'>
-
         <PathGenerator />
         <Community />
         </Flex>
