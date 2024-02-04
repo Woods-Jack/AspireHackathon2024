@@ -10,11 +10,11 @@ export const BusinessGraph = () => {
         By Client Demand
       </Heading>
       <Text color={color.grey} pr="5px">
-        Objectives for the next Q
+        Objectives for the next quarter:
       </Text>
       <Image src="/image-2.png" />
       <Text color={color.grey} pr="5px" fontSize="12px">
-        Data from the business
+        Word cloud generated from business input.
       </Text>
     </Flex>
   );
