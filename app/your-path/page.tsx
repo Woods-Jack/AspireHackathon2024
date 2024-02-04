@@ -1,13 +1,14 @@
 import { LearningPath } from "@/components/LearningPath/LearningPath";
 import { data } from "@/components/LearningPath/data";
+import peopleData from "../../data/dummy-users-2.json";
 
-const yourPath = () => {
+const YourLearningPath = () => {
   return(
     <>
-      <LearningPath content={data} tldr={'This is helping your speed capabilities.'} learners={[{name: 'Alice'},{name: 'Ravi'},{name: 'Jack'}]}/>
+      <LearningPath content={data} tldr={'This is helping your speed capabilities.'} learners={peopleData.people}/>
     </>
     
   )
 }
 
-export default yourPath;
+export default YourLearningPath;

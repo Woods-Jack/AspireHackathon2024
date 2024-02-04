@@ -1,0 +1,49 @@
+{
+  "people": [
+    {
+      "firstName": "Jack",
+      "lastName": "Woods",
+      "location": "London, UK"
+    },
+    {
+      "firstName": "Emily",
+      "lastName": "Smith",
+      "location": "New York, USA"
+    },
+    {
+      "firstName": "Lucas",
+      "lastName": "Johnson",
+      "location": "Sydney, Australia"
+    },
+    {
+      "firstName": "Sophia",
+      "lastName": "Brown",
+      "location": "Paris, France"
+    },
+    {
+      "firstName": "Oliver",
+      "lastName": "Davis",
+      "location": "Toronto, Canada"
+    },
+    {
+      "firstName": "Isabella",
+      "lastName": "Wilson",
+      "location": "Berlin, Germany"
+    },
+    {
+      "firstName": "Liam",
+      "lastName": "Martinez",
+      "location": "Madrid, Spain"
+    },
+    {
+      "firstName": "Ava",
+      "lastName": "Taylor",
+      "location": "Rome, Italy"
+    },
+    {
+      "firstName": "Noah",
+      "lastName": "Anderson",
+      "location": "Tokyo, Japan"
+    }
+  ]
+}

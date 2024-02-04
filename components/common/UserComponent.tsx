@@ -4,11 +4,12 @@ export interface UserProfileProps {
   firstName: string
   lastName: string
   location: string
+  bg?: string
 }
-const UserProfile = ({ firstName, lastName, location }: UserProfileProps) => {
+const UserProfile = ({ firstName, lastName, location, bg="white" }: UserProfileProps) => {
   return (
-    <Flex alignItems="center">
-      <Avatar name={firstName} size="md" bg="white" color="black" mr="4" />
+    <Flex alignItems="center" m='10px'>
+      <Avatar name={firstName} size="md" bg={bg} color="black" mr="4" />
       <Box>
         <Text fontWeight="medium"> {`${firstName} ${lastName}`}</Text>
         <Text color={color.grey} fontSize='12px'> {location}</Text>
