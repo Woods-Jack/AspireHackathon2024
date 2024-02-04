@@ -9,7 +9,8 @@ import {
   Heading,
   Flex,
 } from "@chakra-ui/react";
-import { FaHome, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
 import { IoIosSchool } from "react-icons/io";
 import { GoGraph } from "react-icons/go";
 import { color } from "@/theme/colors";
@@ -38,25 +39,24 @@ const LeftSidebar = () => {
             color="white"
             icon={<GoGraph />}
             fontSize="40px"
+            _hover={{ color: color.grey }}
           />
           <IconButton
-            as="a"
-            href="/your-path"
             aria-label="Path"
             variant="ghost"
             outline="none"
             color="white"
             icon={<IoIosSchool />}
             fontSize="40px"
+            _hover={{ color: color.grey }}
           />
           <IconButton
-            as="a"
-            href="/"
             aria-label="Profile"
             variant="ghost"
             color="white"
             icon={<FaUser />}
             fontSize="40px"
+            _hover={{ color: color.grey }}
           />
         </Flex>
         <Flex h='100%' alignItems='end'>
@@ -66,8 +66,9 @@ const LeftSidebar = () => {
             aria-label="Profile"
             variant="ghost"
             color="white"
-            icon={<FaUser />}
+            icon={<IoLogOutOutline />}
             fontSize="40px"
+            _hover={{ color: color.grey }}
           />
         </Flex>
        

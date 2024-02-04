@@ -6,4 +6,5 @@ export const color = {
   brandPrimary: "#FE414D",
   lightGrey: "#EEEEEE",
   grey: "#B4B4B4",
+  lightBlack: '#3F3F3F'
 };

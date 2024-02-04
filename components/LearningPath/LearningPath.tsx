@@ -1,15 +1,26 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { VStack, Box, Flex, Heading, Text, Button, HStack, Image, Select, color} from "@chakra-ui/react"
-import NextLink from 'next/link'
-import { OtherLearners } from "./OtherLearners"
-import { Feedback } from "./Feedback"
-import { buildUserData } from '@/utils/buildUserData'
-import { LoadingPage } from '../common/Loading'
-import { UserProfileProps } from '../common/UserComponent'
-import { FaArrowRight, FaBookmark } from 'react-icons/fa'
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import {
+  VStack,
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Button,
+  HStack,
+  Image,
+  Select,
+} from "@chakra-ui/react";
+import NextLink from "next/link";
+import { OtherLearners } from "./OtherLearners";
+import { Feedback } from "./Feedback";
+import { buildUserData } from "@/utils/buildUserData";
+import { LoadingPage } from "../common/Loading";
+import { UserProfileProps } from "../common/UserComponent";
+import { FaArrowRight, FaBookmark } from "react-icons/fa";
+import {color} from '../../theme/colors';
 
 interface LearningPathProps {
   content: {
@@ -28,7 +39,7 @@ interface LearningPath {
   justification: string;
 }
 
-const getMarcelData = async (llid:string) => {
+const getMarcelData = async (llid: string) => {
   const response = await fetch("/api/marcel", {
     method: "POST",
     headers: {
@@ -42,12 +53,12 @@ const getMarcelData = async (llid:string) => {
   const dataString = `
     Name: ${marcelData.Name}
     Surname: ${marcelData.Surname}
-    Skills: ${marcelData.Skills.join(', ')}
-  `
-  return dataString
+    Skills: ${marcelData.Skills.join(", ")}
+  `;
+  return dataString;
 };
 
-const getCCData = async (llid:string) => {
+const getCCData = async (llid: string) => {
   const response = await fetch("/api/cc", {
     method: "POST",
     headers: {
@@ -58,23 +69,27 @@ const getCCData = async (llid:string) => {
     }),
   });
   const ccData = await response.json();
-  console.log('data', ccData)
-  return ccData
+  console.log("data", ccData);
+  return ccData;
 };
 
 export const LearningPath = ({ learners }: LearningPathProps) => {
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
 
   const [learningPlan, setLearningPlan] = useState<any>({});
-  const [speedTLDR, setSpeedTLDR] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [speedTLDR, setSpeedTLDR] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const getLearningPlan = async (theme: string, marcelData: string, ccData: string) => {
+  const getLearningPlan = async (
+    theme: string,
+    marcelData: string,
+    ccData: string
+  ) => {
     try {
       const indexName = "courses";
       const getChain = "getLearningPathChain";
       const input = buildUserData(theme, marcelData, ccData);
-      console.log('input', input);
+      console.log("input", input);
       if (indexName) {
         const response = await fetch("/api/azure", {
           method: "POST",
@@ -130,20 +145,23 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
 
   useEffect(() => {
     async function generateLearningPlan(theme: string) {
-      const marcelData = await getMarcelData('annravioli');
-      const ccData = await getCCData('annravioli');
+      const marcelData = await getMarcelData("annravioli");
+      const ccData = await getCCData("annravioli");
       console.log("MARCEL", ccData);
-      const learningPlan = await getLearningPlan(theme.replace('_',' '), marcelData, ccData);
+      const learningPlan = await getLearningPlan(
+        theme.replace("_", " "),
+        marcelData,
+        ccData
+      );
       const descriptions = learningPlan.learningPath
         .map((course: any) => course.description)
         .join(" ");
       await getSpeedTLDR(descriptions);
       setIsLoading(false);
     }
-    const theme = searchParams.get('theme') || ''
+    const theme = searchParams.get("theme") || "";
     generateLearningPlan(theme);
   }, []);
-
 
   const { learningPath } = learningPlan;
 
@@ -154,26 +172,31 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
       <Heading as="h1" fontSize="64px" mb={16}>
         Your Path
       </Heading>
-      <Flex justifyContent='space-between' width='90%'>
-        <Text mb={8} flex="2" maxWidth='70%'>
+      <Flex justifyContent="space-between" width="100%" m='20px'>
+        <Text mb={8} flex="2" maxWidth="70%">
           {speedTLDR}
         </Text>
-        <Flex direction="column" gap='15px'>
+        <Flex direction="column" gap="15px">
           <Button
             variant="outline"
             borderRadius="full"
             rightIcon={<FaBookmark />}
-            background={color.lightGrey}
+            bg={color.lightGrey}
           >
             Save
           </Button>
           <Select
             width="200px"
-            variant="filled"
             borderRadius="full"
             placeholder="Make Shorter"
-            background={color.lightGrey}
-          />
+            bg={color.lightGrey}
+            color={color.black}
+            textAlign={'center'}
+          >
+            <option value="option1">30 minutes</option>
+            <option value="option2">3 hours</option>
+            <option value="option3">1 day</option>
+          </Select>
         </Flex>
       </Flex>
 
@@ -212,7 +235,7 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
                     />
                     <VStack alignItems="start">
                       <Text>{description}</Text>
-                      <Text as='i'>{justification}</Text>
+                      <Text as="i">{justification}</Text>
                     </VStack>
                   </HStack>
                   <Flex
@@ -221,17 +244,18 @@ export const LearningPath = ({ learners }: LearningPathProps) => {
                     justifyContent="space-between"
                     alignItems="end"
                   >
-                    <Text>
-                      <em>{length}</em>
+                    <Text color={color.grey}>
+                     Duration: {length}
                     </Text>
                     <NextLink href={url} passHref>
                       <Button
-                        as='a'
-                        bg={color.black}
+                        as="a"
+                        bg={'black'}
                         borderRadius="14"
-                        color={color.white}
+                        color={'white'}
                         gap="3px"
                         href={url}
+                        _hover={{ bg: color.lightBlack}}
                       >
                         Go to course
                         <FaArrowRight />
