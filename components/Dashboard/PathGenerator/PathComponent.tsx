@@ -6,7 +6,7 @@ interface PathComponentProps {
   description: string;
 }
 export const PathComponent = (props: PathComponentProps) => {
-  const urlSlug = props.title.replace(' ', '_');
+  const urlSlug = props.title.replace(" ", "_");
   return (
     <Flex
       direction="row"
@@ -19,7 +19,15 @@ export const PathComponent = (props: PathComponentProps) => {
         <Text>{props.title}</Text>
         <Text fontSize="12">{props.description}</Text>
       </Flex>
-      <Button bg={color.black} borderRadius="14" color={color.white} gap="3px" as='a' href={`/your-path?theme=${urlSlug}`}>
+      <Button
+        bg={color.black}
+        borderRadius="14"
+        color={color.white}
+        gap="3px"
+        as="a"
+        href={`/your-path?theme=${urlSlug}`}
+        _hover={{ bg: color.lightBlack}}
+      >
         Explore your Path
         <FaArrowRight />
       </Button>
