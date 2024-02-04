@@ -6,6 +6,7 @@ import NextLink from 'next/link'
 import { OtherLearners } from "./OtherLearners"
 import { Feedback } from "./Feedback"
 import { buildUserData } from '@/utils/buildUserData'
+import { LoadingPage } from '../common/Loading'
 
 interface LearningPathProps {
   content: {
@@ -43,6 +44,7 @@ const callBackend = async() => {
 export const LearningPath = ({learners}:LearningPathProps) => {
   const [learningPlan, setLearningPlan] = useState<any>({});
   const [speedTLDR, setSpeedTLDR] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getLearningPlan = async() => {
     try {
@@ -117,12 +119,13 @@ export const LearningPath = ({learners}:LearningPathProps) => {
       const learningPlan = await getLearningPlan();
       const descriptions = learningPlan.learningPath.map((course: any) => course.description).join(' ');
       await getSpeedTLDR(descriptions);
+      setIsLoading(false);
     }
     generateLearningPlan();
   },[]);
   
   const { learningPath } = learningPlan;
-  return(
+  return isLoading ? (<LoadingPage />) : (
     <Box>
       <Heading as='h1' fontSize='64px' fontWeight={300} mb={16}>Your Path</Heading>
       <Text mb={12}>{speedTLDR}</Text>
