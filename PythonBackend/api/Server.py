@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import Response
-from api.Utils import returnMarcelUserData,returnCareerConversationsUserData
+from api.Utils import returnMarcelUserData,returnCareerConversationsUserData,extractKeyWords,returnGoogleTrends
 
 app = Flask(__name__)
 
@@ -10,20 +10,9 @@ app = Flask(__name__)
 def index():
     return "testing changes" #render_template('image_render.html', image=file)
 
-@app.route("/template/")
-@app.route("/template/<name>")
-def template(name = None):
-    return render_template('welcome.html', name = name)
-
-@app.route("/api/search", methods=["POST", "GET"])
-def search():
-    if request.method == "POST":
-        return request.data
-        # return query_pinecone(request.form.question)
-    if request.method == "GET":
-        return "GET"
-        # return query_pinecone(request.args.get("question", ""))
-    return "Only GET and POST methods are allowed for this endpoint"
+@app.route("/api/google_trends/<term>")
+def getGoogleTrends(term = None):
+    return {"data":returnGoogleTrends(term)}
 
 @app.route("/api/user_marcel_data/<LLID>",methods=["GET"])
 def getMarcelUserData(LLID=None):
@@ -47,6 +36,6 @@ def getUserThemes(LLID = None):
     catchup_text = ""
     for quarter in current_year_catchups:
         catchup_text+= current_year_catchups[quarter]
-    
-    return catchup_text 
+    response = {"data":extractKeyWords (catchup_text)}
+    return response
     

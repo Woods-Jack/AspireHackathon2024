@@ -1,5 +1,13 @@
 import json
 import os
+from openai import AzureOpenAI
+from pytrends.request import TrendReq
+
+client = AzureOpenAI(
+    api_key='d3aabbff0b83450ba5fe1d76442d9903',
+    api_version='2023-07-01-preview',
+    azure_endpoint = 'https://gen-z-llm.openai.azure.com/'
+)
 
 def returnMarcelUserData(LLID = None):
     path = os.getcwd()+"/api/static/Data/marcel.json"
@@ -24,17 +32,18 @@ def returnCareerConversationsUserData(LLID = None):
             }
     
     
-# def extractKeyWords(data = None):
-#     nlp = spacy.load("en_core_web_sm")
-#     doc = nlp(data.lower())
-    
-#     noun_phrases = [chunk.text for chunk in doc.noun_chunks]
-    
-#     vectorizer = TfidfVectorizer()
-#     tfidf = vectorizer.fit_transform(noun_phrases)
-    
-#     top_phrases = sorted(vectorizer.vocabulary_, key=lambda x: tfidf[0, vectorizer.vocabulary_[x]], reverse=True)[:3] 
-#     return top_phrases
+def extractKeyWords(data = None):
+    completion = client.chat.completions.create(model = "gen-z-gpt35",messages = [{
+        "role": "user",
+        "content": f"Extract the 5 key words from the following piece of text.The text represents the career goals of an employee for the next quarter. The key words will be used to recommend training material for the employee so be specific about technologies. Return the keyworkds as a comma separated list without numbering them. {data}"
+    }])
+    #completion = client.completions.create(model = "gen-z-gpt35",prompt = 'what is the capital of afghanistan?')
+    return completion.choices[0].message.content
 
+
+def returnGoogleTrends(term=None):
+    pytrends = TrendReq(hl='en-US', tz=360)
+    pytrends.build_payload(kw_list=[term], cat=0, timeframe='today 12-m', geo='', gprop='')
+    return pytrends.interest_over_time().to_json()
     
     
